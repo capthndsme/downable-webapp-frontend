@@ -1,0 +1,931 @@
+/*! HTML5 Boilerplate v7.3.0 | MIT License | https://html5boilerplate.com/ */
+
+/* main.css 2.0.0 | MIT License | https://github.com/h5bp/main.css#readme */
+/*
+ * What follows is the result of much research on cross-browser styling.
+ * Credit left inline and big thanks to Nicolas Gallagher, Jonathan Neal,
+ * Kroc Camen, and the H5BP dev community and team.
+ */
+ .swal2-popup {
+  background: rgba(34,34,34,0.63) !important;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 15px !important;
+}
+.moreSelect {
+  margin-top: 8px;
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  background: rgba(0,0,0,0.2);
+  color: white;
+  border: none;
+}
+#AddToPlaylistView {
+  position: fixed;
+  z-index:104;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  background: #000;
+  display: none;
+}
+/* ==========================================================================
+   Base styles: opinionated defaults
+   ========================================================================== */
+/* track */
+.biginput[type="range"] {
+  -webkit-appearance: none !important;
+  width: 100%;
+  height: 2px;
+  background-color: transparent;
+  border: none;
+  border-radius: 10px;
+  margin: auto;
+  transition: all 400ms;
+  outline:none;
+  padding: 0;
+  margin: 0;
+}
+
+.biginput[type="range"]::-moz-range-track { 
+  width: 100%;
+  height: 1px;
+  background-color: transparent;
+  border: none;
+  border-radius: 10px;
+  margin: auto;
+  transition: all 400ms;
+  outline:none;
+  padding: 0;
+  margin: 0;
+}
+
+/* thumb */
+.biginput[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none !important;
+  transform:scale(0.75);
+  width: 20px;
+  height: 20px;
+  border: none;
+  background-color: #ffffff;
+  border-radius: 40px; 
+  box-shadow: 0px 0px 0px green;
+  transition: all 400ms;
+  outline:none
+}
+.biginput[type="range"]::-moz-range-thumb {
+  -webkit-appearance: none !important;
+  transform:scale(0.75);
+  width: 20px;
+  height: 20px;
+  border: none;
+  background-color: #ffffff;
+  border-radius: 30px;
+  box-shadow: 0px 0px 0px green;
+  transition: all 400ms;
+  outline:none
+}
+
+/* thumb hover */
+.biginput[type="range"]::-webkit-slider-thumb:hover {  
+  transform:scale(0.85);
+}
+.biginput[type="range"]::-moz-range-thumb:hover{
+  transform:scale(0.85);
+}
+
+/* thumb active */
+.biginput[type="range"]::-webkit-slider-thumb:active {
+  transform:scale(1);
+}
+.biginput[type="range"]::-moz-range-thumb:active{
+  transform:scale(1);
+}
+
+ 
+html {
+  color: #eee;
+  background: #222;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-size: 1em;
+  line-height: 1.4;
+}
+
+/*
+ * Remove text-shadow in selection highlight:
+ * https://twitter.com/miketaylr/status/12228805301
+ *
+ * Vendor-prefixed and regular ::selection selectors cannot be combined:
+ * https://stackoverflow.com/a/16982510/7133471
+ *
+ * Customize the background color to match your design.
+ */
+
+::-moz-selection {
+  background: #b3d4fc;
+  text-shadow: none;
+}
+
+::selection {
+  background: #b3d4fc;
+  text-shadow: none;
+}
+
+/*
+ * A better looking default horizontal rule
+ */
+
+hr {
+  display: block;
+  height: 1px;
+  border: 0;
+  border-top: 1px solid #ccc;
+  margin: 1em 0;
+  padding: 0;
+}
+
+/*
+ * Remove the gap between audio, canvas, iframes,
+ * images, videos and the bottom of their containers:
+ * https://github.com/h5bp/html5-boilerplate/issues/440
+ */
+
+audio,
+canvas,
+iframe,
+img,
+svg,
+video {
+  vertical-align: middle;
+}
+
+/*
+ * Remove default fieldset styles.
+ */
+
+fieldset {
+  border: 0;
+  margin: 0;
+  padding: 0;
+}
+
+/*
+ * Allow only vertical resizing of textareas.
+ */
+
+textarea {
+  resize: vertical;
+}
+
+/* ==========================================================================
+   Browser Upgrade Prompt
+   ========================================================================== */
+
+.browserupgrade {
+  margin: 0.2em 0;
+  background: #ccc;
+  color: #000;
+  padding: 0.2em 0;
+}
+
+/* ==========================================================================
+   Author's custom styles
+   ========================================================================== */
+
+/* ==========================================================================
+   Helper classes
+   ========================================================================== */
+
+/*
+ * Hide visually and from screen readers
+ */
+
+.hidden {
+  display: none !important;
+}
+
+/*
+* Hide only visually, but have it available for screen readers:
+* https://snook.ca/archives/html_and_css/hiding-content-for-accessibility
+*
+* 1. For long content, line feeds are not interpreted as spaces and small width
+*    causes content to wrap 1 word per line:
+*    https://medium.com/@jessebeach/beware-smushed-off-screen-accessible-text-5952a4c2cbfe
+*/
+
+.sr-only {
+  border: 0;
+  clip: rect(0, 0, 0, 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+  /* 1 */
+}
+
+/*
+* Extends the .sr-only class to allow the element
+* to be focusable when navigated to via the keyboard:
+* https://www.drupal.org/node/897638
+*/
+
+.sr-only.focusable:active,
+.sr-only.focusable:focus {
+  clip: auto;
+  height: auto;
+  margin: 0;
+  overflow: visible;
+  position: static;
+  white-space: inherit;
+  width: auto;
+}
+
+/*
+* Hide visually and from screen readers, but maintain layout
+*/
+
+.invisible {
+  visibility: hidden;
+}
+
+/*
+* Clearfix: contain floats
+*
+* For modern browsers
+* 1. The space content is one way to avoid an Opera bug when the
+*    `contenteditable` attribute is included anywhere else in the document.
+*    Otherwise it causes space to appear at the top and bottom of elements
+*    that receive the `clearfix` class.
+* 2. The use of `table` rather than `block` is only necessary if using
+*    `:before` to contain the top-margins of child elements.
+*/
+
+.clearfix:before,
+.clearfix:after {
+  content: " ";
+  /* 1 */
+  display: table;
+  /* 2 */
+}
+
+.clearfix:after {
+  clear: both;
+}
+
+/* ==========================================================================
+   EXAMPLE Media Queries for Responsive Design.
+   These examples override the primary ('mobile first') styles.
+   Modify as content requires.
+   ========================================================================== */
+
+@media only screen and (min-width: 35em) {
+  /* Style adjustments for viewports that meet the condition */
+}
+
+@media print,
+  (-webkit-min-device-pixel-ratio: 1.25),
+  (min-resolution: 1.25dppx),
+  (min-resolution: 120dpi) {
+  /* Style adjustments for high resolution devices */
+}
+
+/* ==========================================================================
+   Print styles.
+   Inlined to avoid the additional HTTP request:
+   https://www.phpied.com/delay-loading-your-print-css/
+   ========================================================================== */
+
+@media print {
+  *,
+  *:before,
+  *:after {
+    background: transparent !important;
+    color: #000 !important;
+    /* Black prints faster */
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+  a,
+  a:visited {
+    text-decoration: underline;
+  }
+  a[href]:after {
+    content: " (" attr(href) ")";
+  }
+  abbr[title]:after {
+    content: " (" attr(title) ")";
+  }
+  /*
+     * Don't show links that are fragment identifiers,
+     * or use the `javascript:` pseudo protocol
+     */
+  a[href^="#"]:after,
+  a[href^="javascript:"]:after {
+    content: "";
+  }
+  pre {
+    white-space: pre-wrap !important;
+  }
+  pre,
+  blockquote {
+    border: 1px solid #999;
+    page-break-inside: avoid;
+  }
+  /*
+     * Printing Tables:
+     * https://web.archive.org/web/20180815150934/http://css-discuss.incutio.com/wiki/Printing_Tables
+     */
+  thead {
+    display: table-header-group;
+  }
+  tr,
+  img {
+    page-break-inside: avoid;
+  }
+  p,
+  h2,
+  h3 {
+    orphans: 3;
+    widows: 3;
+  }
+  h2,
+  h3 {
+    page-break-after: avoid;
+  }
+}
+@keyframes reveal {
+  from {
+    transform: scaleY(0);
+    opacity: 0;
+  } to {
+    opacity: 1;
+    transform: scaleY(1);
+  }
+}
+#MoreFV {
+  position: fixed;
+  top: 48px;
+  transform-origin: top;
+  right: 8px;
+  display:none;
+  animation: reveal 350ms ease-in;
+  background: rgba(24,24,24,0.4);
+  padding:8px;
+
+  width: 150px;
+  border-radius: 8px;
+  min-height:32px;
+}
+/*
+Desktop 
+*/
+#NavInr {
+  display:block;
+  padding: 12px;
+}
+#NavInr a {
+  width: 100%;
+  margin-bottom: 16px;
+}
+@keyframes lUI {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+   to {
+    transform: translateY(0%);
+    opacity: 1;
+    -webkit-backdrop-filter: none;
+   }
+}
+#NavUI {
+  position:fixed;
+  animation: lUI 350ms ease-in;
+  width: 300px;
+  transition: width 350ms, height 350ms, top 350ms;
+  height: 100%;
+  background: #333;
+  z-index: 100;
+}
+#PlayBar {
+  position: fixed;
+ 
+  bottom: 0px;
+}
+#MainUI {
+
+
+  transition: transform 350ms ease-in-out;
+  position: fixed;
+  top: 0px;
+  right: 0px;
+  width: calc(100% - 300px);
+  height: 100%;
+}
+div {
+  overscroll-behavior: none
+}
+.navicons {
+  color: white;
+  text-decoration: none;
+  display: inline-block;
+}
+  .navicons * {
+    display: inline-block
+  }
+@keyframes viewIn {
+  from {
+    transform: scale(0.75);
+    opacity: 0.5;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+div,input {
+  box-sizing: border-box;
+}
+.ViewHeader {
+  position: fixed;
+  width:100%;
+  z-index:5;
+  background: rgba(34,34,34,0.75);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  border-bottom: solid 1px #333;;
+  padding: 8px 16px;
+}
+
+#HomeSearch, #FilterSearch {
+  width:280px;
+  border-radius: 24px;
+  color: #eee;
+  padding: 8px 12px;
+  background: #333;
+  border: none;
+  outline: none;
+}
+#FilterSearch {
+  width: 100%;
+}
+.big {
+  font-weight: 300;
+  font-size:32px;
+}
+.songList {
+  display: flex;
+width: 100%;
+border-bottom: solid 1px #333;
+
+}
+#EmbedPlace {
+  display: NONE;
+  animation: viewIn 350ms ease-out;
+}
+#CheckEmbeds {
+  width: 100%;
+}
+#AllSongs, #Sublists {
+  animation: sup 350ms;
+  animation-delay: 100ms;
+}
+.songMore {
+ 
+  border: none;
+  background: none;
+  outline:none;
+ 
+  color: white;
+}
+#SongTitle {
+  position: relative;
+  top: 30px
+}
+.songTitle {
+  width: calc(100% - 64px);
+  display: inline-block;
+  flex: 1 0 auto;
+  padding: 12px;
+}
+#AllSongs, #Sublists {
+  width: 100%;
+  display: none;
+  padding-top:100px;
+  padding-bottom:100px;
+}
+#HomeView, #DownloadsView {
+  padding-bottom: 100px;
+}
+.view {
+  display: none;
+  animation: viewIn 350ms ease-in-out;
+  height: 100%;
+  overflow-y:scroll;
+}
+.activeView {
+  display: block;
+}
+.searchResultImg {
+  width: 96px;
+  height: 96px;
+  object-fit: cover;
+  display:inline-block;
+}
+.searchResultCtx {
+  display: inline-block;
+  padding: 4px 8px;
+  width: calc(100% - 100px);
+  float:right;
+  
+ 
+}
+#NavRange,
+.downloadmeter {
+    width: 100%;
+    background-color: #aaa;
+}
+
+.DownloadItem {
+    border-bottom: solid 1px #aaa;
+    padding-bottom: 8px;
+    margin-bottom: 4px;
+}
+.fvi {
+  font-size:36px;
+  color: white;
+  background: none;
+  border: none;
+}
+.DownloadTitle {
+    font-size: 20px;
+    padding: 8px;
+}
+#AlbumArt {
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  top: calc(40% - 150px);
+  left: calc(50% - 150px);
+  -webkit-box-shadow: 0px 2px 12px -2px rgba(0,0,0,0.75);
+  -moz-box-shadow: 0px 2px 12px -2px rgba(0,0,0,0.75);
+  box-shadow: 0px 2px 12px -2px rgba(0,0,0,0.75);
+  object-fit: cover;
+  margin: 0 auto;
+}
+#SongTitle {
+  text-align: center;
+  font-size: 20px;
+  margin-bottom: 8px;
+}
+.SizeControl {
+  width: 100%;
+  max-width: 768px;
+  margin: auto;
+}
+body {
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  overscroll-behavior-y: contain;
+}
+#FVPlayButtons {
+  display: flex;
+  justify-content: space-evenly;
+}
+.FVItem {
+  text-align: center;
+}
+#FVControls {
+  position: absolute;
+  bottom: calc(10% - 50px);
+  width: 100%;
+  
+ 
+  left: 0px;
+}
+.settings {
+  position: fixed;
+  right: 8px;
+z-index:99;
+  top: 8px;
+
+  padding:8px;
+  border-radius: 24px;
+  color: white;
+}
+.settings i {
+  font-size: 16px;
+}
+#SettingsView {
+  padding: 16px;
+  display: none;
+  
+}
+#FVHeads,#SVHeads {
+  padding: 8px;
+  display: flex;
+}
+#FVHeads button, #SVHeads button {
+  height: auto;
+  width: 48px;
+}
+#DownloadList {
+  padding-top:100px;
+}
+.DownloadID,
+.DownloadSize {
+    margin: 8px;
+    font-size: 14px;
+    padding: 4px;
+    background: #eee;
+    color: #333;
+    border-radius: 4px;
+}
+
+#FullRangeMeter,
+#NavRangeMeter {
+    width: 1%;
+    height: 2px;
+    background-color: white;
+}
+
+.downloadmeterfill {
+    width: 0%;
+    height: 2px;
+    background-color: green;
+}
+
+#SearchPlace {
+  display: none;
+  padding-bottom: 100px;
+  animation: sup 350ms;
+}
+#SearchHeader, .sss {
+  display: none;
+margin-top:16px;
+position: sticky;
+top:0px;
+left:0px;
+
+padding:12px;
+background: #333;
+}
+#SearchUI {
+  position: fixed;
+  top:0px;
+  left:0px;
+  display: none;
+  width:100%;
+  height: 100%;
+  overflow-y:scroll;
+  padding-top:100px;
+  background:#222;
+  z-index:2;
+}
+.searchResult {
+  overflow: auto;
+  width: 100%;
+  border-top: solid 1px #333;
+}
+.aps {
+  padding: none;
+  border: none;
+  color: white;
+  background: none;
+  height: 32px;
+}
+@keyframes loadStart {
+  from {
+    transform: rotateZ(-270deg) scale(0);
+    opacity: 0;
+  } to {
+    opacity: 1;
+    transform: rotateZ(0deg) scale(1);
+  }
+}
+@keyframes sup {
+  from {
+    transform:translateY(60px);
+    opacity: 0;
+  } to {
+    opacity: 1;
+    transform:translateY(0px);
+  }
+}
+.swal2-title, .swal2-content {
+  color: white !important;
+}
+#Albart {
+  position: fixed;
+  bottom:32px;
+  width: 300px;
+  object-fit:cover;
+  height:300px;
+  border: none;
+}
+#SongListSubview {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+}
+.pbut {
+  width: calc(50% - 8px);
+  padding: 8px;
+  margin-right: 4px;
+  box-sizing: border-box;
+  margin-bottom:8px;
+  display: inline-block;
+  background: #333;
+  border-radius: 4px;
+  color: #eee;
+  text-decoration: none;
+}
+#PlaylistViews {
+  position: fixed;
+  z-index:1;
+  transition: transform 350ms ease-in-out;
+  padding: 8px;
+  width: 100%;
+  height: 100%;
+  background: #222;
+  padding-top: 100px;
+}
+#HomeSearch {
+  animation: sup 350ms;
+}
+#loadout {
+  animation: loadStart 550ms;
+}
+#PlayBar {
+  display: flex;
+  color: white;
+  height: 32px;
+  width: 100%;
+}
+#nowPlaying {
+  flex: 1 0 auto;
+  color: white;
+  line-height: 2.0;
+  text-decoration: none;
+  display: block;
+  ;
+}
+.toastify {
+  z-index: 10000;
+ 
+}
+.switch-input {
+  display: none;
+}
+
+.switch-label {
+  position: relative;
+  display: inline-block;
+  min-width: 112px;
+  cursor: pointer;
+  font-weight: 500;
+  text-align: left;
+  margin: 16px;
+  color: white;
+  padding: 16px 0 16px 44px;
+}
+
+.switch-label:before,
+.switch-label:after {
+  content: "";
+  position: absolute;
+  margin: 0;
+  outline: 0;
+  top: 50%;
+  -ms-transform: translate(0, -50%);
+  -webkit-transform: translate(0, -50%);
+  transform: translate(0, -50%);
+  -webkit-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+}
+
+.switch-label:before {
+  left: 1px;
+  width: 34px;
+  height: 14px;
+  background-color: #9E9E9E;
+  border-radius: 8px;
+}
+
+.switch-label:after {
+  left: 0;
+  width: 20px;
+  height: 20px;
+  background-color: #FAFAFA;
+  border-radius: 50%;
+  box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.14), 0 2px 2px 0 rgba(0, 0, 0, 0.098), 0 1px 5px 0 rgba(0, 0, 0, 0.084);
+}
+
+.switch-label .toggle--on {
+  display: none;
+}
+
+.switch-label .toggle--off {
+  display: inline-block;
+}
+
+.switch-input:checked+.switch-label:before {
+  background-color: #A5D6A7;
+}
+
+.switch-input:checked+.switch-label:after {
+  background-color: #4CAF50;
+  -ms-transform: translate(80%, -50%);
+  -webkit-transform: translate(80%, -50%);
+  transform: translate(80%, -50%);
+}
+
+.switch-input:checked+.switch-label .toggle--on {
+  display: inline-block;
+}
+
+.switch-input:checked+.switch-label .toggle--off {
+  display: none;
+}
+#FullRangeBar {
+  margin-top: 36px;
+  top: 16px;
+  width: 100%;
+  position: relative;
+  background-color: grey;
+}
+.selectorSelected {
+  background: #999;
+}
+#FullView, #SettingsView {
+  position: fixed;
+  left: 0px;
+  top: 0px;
+  width: 100%;
+  height: 100%;
+  z-index: 110;
+  transform: translateY(100%);
+  background: black;
+  transition: transform 350ms ease-in-out;
+}
+#SettingsView {
+  z-index:112;
+  transform: none;
+}
+/*
+Mobile
+*/
+@media only screen and (max-width: 820px) {
+  .navicons {
+    text-align: center;
+  }
+  .navicons * {
+    display: block
+  }
+  #NavUI {
+    bottom: 0px;
+    border-top: solid 1px #333;
+    backdrop-filter: blur(15px) saturate(155%);
+    -webkit-backdrop-filter: blur(18px) saturate(155%);
+    background: rgba(40,40,40,0.76);
+    left: 0px;
+    top: unset;
+    width: 100%;
+   height: auto;
+ 
+  }
+
+  #NavInr {
+    display: flex;
+ 
+    padding: 8px;
+    justify-content: space-evenly;
+  }
+  #MainUI {
+     
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+  }
+  #NavInr a {
+    width: auto;
+    margin-bottom: 0px;
+  }
+  #PlayBar {
+    position: static;
+  }
+  .hideMob {
+    display: none;
+  }
+}

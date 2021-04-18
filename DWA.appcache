@@ -1,0 +1,40 @@
+CACHE MANIFEST 
+# Downable v3 0.35
+# 0.2 Fixed a bug, Added backdrop filter toggle 
+# 0.3 ADDED PLAYLISTS, SHUFFLE AND REPEAT MODES; HOTFIX 0.3.1 BACK BUTTON FIXED
+# 0.35 ADDED DOWNLOAD URL, ADDED INFRASTRUCTURE TO ENABLE DOWNLOADING FROM DIFFERING SITES.
+
+/
+/index.html
+js/Toast.js
+js/Base64.js
+js/md5.js
+js/main.js
+js/QueueManager.js
+js/color-thief.umd.js
+js/infinity.min.js
+js/plugins.js
+js/navigo.min.js
+js/FullViewDriver.js
+js/AudioPlayer.js
+js/vendor/jquery-3.4.1.min.js
+js/vendor/modernizr-3.8.0.min.js
+css/main.css
+css/light.css
+css/NoBlur.css
+css/normalize.css
+css/Toast.css
+css/material-icons.css
+css/MaterialIcons-Regular.eot
+css/MaterialIcons-Regular.ijmap
+css/MaterialIcons-Regular.svg
+css/MaterialIcons-Regular.ttf
+css/MaterialIcons-Regular.woff
+css/MaterialIcons-Regular.woff2
+Downable3.png
+js/pouchdb.min.js
+js/swal.min.js
+noart.png
+
+NETWORK: 
+*

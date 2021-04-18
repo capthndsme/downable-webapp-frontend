@@ -1,0 +1,246 @@
+<!doctype html>
+<html manifest="DWA.appcache" class="no-js" lang="">
+
+<head>
+	<meta charset="utf-8">
+	<title></title>
+	<meta name="description" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link href="css/material-icons.css" rel="stylesheet">
+	<script src="js/navigo.min.js"></script>
+	<link rel="manifest" href="site.webmanifest">
+	<link rel="apple-touch-icon" href="icon.png">	
+	<meta name="apple-mobile-web-app-title" content="Downable Web App">
+	<!-- Place favicon.ico in the root directory -->
+	<meta name="theme-color" content="#222">
+	<link rel="stylesheet" href="css/normalize.css">
+	<link rel="stylesheet" href="css/Toast.css">
+	<link rel="stylesheet" href="css/main.css">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="mobile-web-app-capable" content="yes">
+	<meta name="theme-color" content="#fafafa">
+</head>
+
+<body onload="do_Load();">
+	<canvas id="BackdropCanvas" style="display: none;width:100%;height:100%;z-index:-1;position:fixed;left:0;top:0;"></canvas>
+	<!--[if IE]>
+		<p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
+	<![endif]-->
+
+	<!-- Add your site or application content here -->
+	<a href="settings" data-elastic data-navigo  class="settings"> 
+		<i class="material-icons">settings</i>
+	</a>
+		<div id="NavUI">
+			<div id="NavRange">
+				<div id="NavRangeMeter"></div>
+			</div>
+			<img src="noart.png" id="Albart" class="hideMob">
+			<div id="PlayBar">
+				<button onclick="playBack()" class="hideMob material-icons aps">skip_previous</button>
+				<button id="BarPlay" onclick="togglePause()" class="material-icons aps">pause</button>
+				<button onclick="playBack()" class="hideMob material-icons aps">skip_next</button>
+				<a data-navigo href="playOpen" id="nowPlaying">Nothing playing.</a>
+			</div> 
+			<div id="NavInr">
+				<div class="hideMob" style="font-weight: 300;font-size:36px;margin-bottom:16px;">Downable</div>
+				<a href="home" data-elastic data-navigo id="home" class="navicons"> 
+					<i class="material-icons">home</i>
+					<div class="NavName">Home</div>
+				</a>
+				<a href="downloads" data-elastic data-navigo id="downloads" class="navicons">
+					<i class="material-icons">cloud_download</i>
+					<div class="NavName">Downloads</div>
+				</a>
+				<a href="library" data-elastic data-navigo id="Library" class="navicons">
+					<i class="material-icons">library_music</i>
+					<div class="NavName">Library</div>
+				</a>
+			</div>
+		</div>
+
+	<div id="MainUI"  >
+		<div id="HomeView" class="view activeView">
+			<div style="opacity:0.3;padding: 4px;">Downable v3 by captainhandsome</div>
+			<div id="NoNetworkError" style="display: none;">No network access.</div>
+			<center id="MainDLUI">
+				
+				<img id="loadout" src="Downable3.png" style="width:128px; height: 128px;"><br/>
+				<br/>
+			<input onkeyup="searchManager(this, event)" id="HomeSearch" placeholder="Search songs">
+			</center>
+			<div style="display: none;text-align: center;" id="SearchStatus">Searching.. please wait.</div>
+			<div id="SearchHeader">
+				Search Results
+				<button onclick="hideSearchUI()" style="float:right">Close</button>
+			</div>
+			<div id="EmbedPlace">
+				<div id="SongTitleResult"></div>
+
+                <img id="CheckEmbeds" src="https://i.ytimg.com/vi/-jkPpUupsRQ/hqdefault.jpg">
+			
+			<center> <button id="DownloadResultReady" onclick="DownloadResultReady(this)" data-download="" data-title="">Download!</button></center>
+			</div>
+			<div id="SearchPlace">
+
+			</div>
+			
+		</div>
+		<div id="DownloadsView" class="view">
+			<div id="DLHeader" class="ViewHeader">
+				<div class="big">Downloads</div>
+			</div>
+			<div id="DownloadList">
+				<div style="padding:0px 32px;">Tips:<br/>
+					Make sure to add this app to homescreen so your device will increase the available storage!<br/><br/>
+					iOS Safari will allow a minimum of 500mb data to be stored<br/><br/>
+					Click the button below to make your browser try hard to persist your data.
+					
+				</div>
+				<button onclick="requestStorage()" style="margin-left:32px; width: calc(100% - 64px);">Request Persistent Storage</button>
+			</div>
+		</div>
+		<div id="LibraryView" class="view">
+			<div id="LibHeader" class="ViewHeader">
+				<div id="libBtn" onclick="condUp()" style="display:inline-block" class="big">Library </div><div style="margin-left:4px;display:inline-block" id="currQ"></div>
+				<input onkeyup="filterManager(this)" id="FilterSearch" placeholder="Find in library">
+			</div>
+			<div id="SearchUI">
+				<div class="sss" style="display: block;top:0px;margin-top:0px;background:#333">
+					All Songs Search Results <span style="opacity:0.3">clear search to close</span>
+ 
+				</div>
+				<div id="SearchContent">
+
+				</div>
+			</div>
+			<div id="PlaylistViews">
+				Playlists
+				<div id="Playlists">
+					<a class="pbut" href="#!library/AllSongs">All Songs</a>
+					<a class="pbut" href="#!createPlist">Create Playlist</a>
+ 
+					
+				</div>				
+			</div>
+
+			<div id="AllSongs">
+				
+			</div>				
+			<div id="Sublists">
+				
+			</div>		
+
+		</div>
+	</div>
+	<div id="AddToPlaylistView">
+		<button onclick="window.history.back()" class="aps material-icons">close</button>
+		<div class="big">Add song to Playlist</div>
+		Currently adding: <div id="SongNameAdd"></div><br/>
+		Select playlist from below.
+		<div id="PLV_Selectors">
+
+		</div>
+		<div onclick="addSongToPlaylistCalc()" style="width:100%" class="pbut">Add to Playlist</div>
+	</div>
+	<div id="FullView">
+		<div id="MoreFV">
+			Options
+		</div>
+		<div id="FVHeads">
+			<button onclick="window.history.back()" class="aps material-icons">close</button>
+			<div class="FVItem" style="flex: 1 0 auto">
+				NOW PLAYING<br/>
+				<div id="CurrentQueue">All Songs</div>
+			</div>
+			<button onclick="moreFV()" class="aps material-icons">more_vert</button>
+		</div>
+		<img src="noart.png" id="AlbumArt">
+		<div id="FVControls"> 
+			
+			<div style="padding:16px;" class="SizeControl">
+				<div id="SongTitle">No Song Playing</div>
+				<div id="FullRangeBar">
+					<div id="FullRangeMeter"></div>
+				</div>
+				<input type="range" min="0" max="100" value="50" class="slider biginput" id="FullRange">
+				<div style="overflow:auto">
+					<div id="FullTimer" style="float:left" class="FullTimer">00:00</div>
+					<div id="FullTimerTotal" style="float:right" class="FullTimerTotal">00:00</div>
+				</div>
+				
+
+			<div id="FVPlayButtons">
+				<button id="FVShuffle" onclick="toggleShuffle(this)" class="material-icons fvi">shuffle</button>
+				<button id="FVBack" onclick="playBack()" class="material-icons fvi">skip_previous</button>
+				<button id="FullPlay" onclick="togglePause()" class="material-icons fvi">pause</button>
+				<button id="FVForw" onclick="playNext()" class="material-icons fvi">skip_next</button>
+				<button id="FVRepeat" onclick="toggleRepeat()" class="material-icons fvi">repeat</button>
+			</div>
+			</div>
+		</div>
+	</div> 
+	<div id="SettingsView">
+		<div id="SVHeads">
+			<button onclick="window.history.back()" class="aps material-icons">close</button>
+			<div class="FVItem" style="flex: 1 0 auto">
+				Settings
+			</div>
+			<button onclick="moreFV()" class="aps material-icons"></button>
+		</div>
+		<br/>
+		Disable blur if you are experiencing bad performance, especially on lower end devices.<br/>
+		<input onchange="toggleBlur(this)" type="checkbox" id="disableBlur" name="blur-tgl" class="switch-input">
+        <label for="disableBlur" class="switch-label">Disable Blur Effects<span class="toggle--on"></span><span class="toggle--off"></span></label>
+		<br/>
+		<input type="checkbox" id="Theme" name="Theme-tgl" class="switch-input">
+        <label for="Theme" class="switch-label">Theme <span class="toggle--on">Light</span><span class="toggle--off">Dark</span></label><br/>
+	</div>
+	<div id="tmps" style="display:none">
+		<a class="pbut" id="tmp_plist" href="#!library/AllSongs">All Songs</a>
+		<a class="pbut" data-selected="no" id="tmp_selector" onclick="selectSelfAsPlaylist(this)">All Songs</a>
+		<div onclick="changeSong(this)" id="tmp_song" class="songList">
+			<div class="songTitle">%Title%</div>
+			<button onclick="songMore(this, event)" class="songMore material-icons">more_vert</button>
+		</div>
+		<div class="searchResult" id="tmp_SearchResult">
+			<img class="searchResultImg" src="">
+			<div class="searchResultCtx">
+				<div class="searchResultTitle">Title</div>
+				<button class="searchResultDL" onclick="callDownload(this)">Download</button>
+				<div class="searchResultMeta"></div>
+			</div>
+		</div>
+		<div class="DownloadItem" id="tmp_dl">
+            <div class="downloadmeter">
+                <div class="downloadmeterfill"></div>
+            </div>
+            <span class="DownloadTitle">TITLE</span><br>
+            <span class="DownloadID">adasda</span>
+            <span class="DownloadSize">adasda</span>
+
+        </div>
+	</div>
+	<script src="js/vendor/modernizr-3.8.0.min.js"></script>
+	<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+	<script>window.jQuery || document.write('<script src="js/vendor/jquery-3.4.1.min.js"><\/script>')</script>
+	<script src="js/plugins.js"></script>
+	<script src="js/color-thief.umd.js"></script>
+	<script src="js/Base64.js"></script>
+	<script src="js/pouchdb.min.js"></script>
+	<script src="js/Toast.js"></script>
+	<script src="js/FullViewDriver.js"></script>
+	<script src="js/QueueManager.js"></script>
+	<script src="js/swal.min.js"></script>
+	<script src="js/AudioPlayer.js"></script>
+
+	<script src="js/main.js"></script>
+<!--<script src="js/butterchurn.min.js"></script>
+	<script src="js/butterchurnPresets.min.js"></script>
+	<script src="js/audioctxdriver.js"></script>
+-->
+	
+ 
+</body>
+
+</html>

@@ -1,0 +1,24 @@
+html {
+    color: #111;
+    background:#fafafa;
+}
+input {
+    background:#ddd !important;
+    color:black !important;
+}
+div, .material-icons,input, button, span, i, a {
+    
+    color: #111;
+}
+.songList {
+    border-bottom: solid 1px #ddd
+
+}
+#NavUI {
+    border-top: solid 1px #ddd;
+    background: rgba(239,239,239,0.7);
+}
+.ViewHeader {
+    border-bottom: solid 1px #ddd;
+    background: rgba(239,239,239,0.7);
+}
