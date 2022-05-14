@@ -669,7 +669,7 @@ z-index:99;
   animation: sup 350ms cubic-bezier(.25,0,0,1);
 }
 #SearchHeader, .sss {
-  display: none;
+  display: flex;
 margin-top:16px;
 position: sticky;
 top:0px;
@@ -680,7 +680,7 @@ padding: 8px 16px;
 backdrop-filter: blur(15px);
 align-content: center;
 justify-content: space-between;
-background: rgba(51 51 51, 0.75);
+background: rgba(51, 51, 51, 0.65);
 }
 button {
   background-color: #333333;
