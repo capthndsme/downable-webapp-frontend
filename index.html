@@ -6,8 +6,16 @@
 	<title></title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<script>
+		if('serviceWorker' in navigator) {
+		  navigator.serviceWorker
+				   .register('/sw.js')
+				   .then(function() { console.log("Service Worker Registered"); });
+		}
+		</script>
 	<link href="css/material-icons.css" rel="stylesheet">
 	<script src="js/navigo.min.js"></script>
+	
 	<link rel="manifest" href="site.webmanifest">
 	<link rel="apple-touch-icon" href="icon.png">	
 	<meta name="apple-mobile-web-app-title" content="Downable Web App">
@@ -61,7 +69,7 @@
 
 	<div id="MainUI" >
 		<div id="HomeView" class="view activeView">
-			<div style="opacity:0.3;padding: 4px;">Downable v3 by captainhandsome</div>
+			<div style="opacity:0.3;padding: 4px;">Downable v3.39 by captainhandsome</div>
 			<div id="NoNetworkError" style="display: none;">No network access.</div>
 			<center id="MainDLUI">
 				
@@ -77,7 +85,7 @@
 			<div id="EmbedPlace">
 				<div id="SongTitleResult"></div>
 
-                <img id="CheckEmbeds" src="https://i.ytimg.com/vi/-jkPpUupsRQ/hqdefault.jpg">
+                <img id="CheckEmbeds" >
 			
 			<center> <button id="DownloadResultReady" onclick="DownloadResultReady(this)" data-download="" data-title="">Download!</button></center>
 			</div>
