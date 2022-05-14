@@ -903,3 +903,25 @@ function filterManager(ref) {
     SearchUI.style.display = "none";
   }
 }
+
+let _lyricLock;
+function closeLyricsView() {
+  
+  let target = document.getElementById("FVLyricsView");
+  window.clearTimeout(_lyricLock);
+  _lyricLock = setTimeout(function() {
+    target.style.display = "none";
+  }, 360);
+  
+  target.style.transform = "translateY(100%)"
+}
+function showLyrics() {
+  moreFV();
+  let target = document.getElementById("FVLyricsView");
+  target.style.display = "block";
+  window.clearTimeout(_lyricLock);
+  _lyricLock = setTimeout(function() {
+    target.style.transform = "translateY(0%)"
+  }, 32);
+
+}
