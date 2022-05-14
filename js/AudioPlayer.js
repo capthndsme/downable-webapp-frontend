@@ -61,12 +61,7 @@ function playSongArr(PlaybackPos) {
     document.getElementById("SongTitle").innerHTML = QueueManager.Queue[PlaybackPos][0];
     QueueManager.playbackPosition = PlaybackPos;
     getBlobArt(QueueManager.Queue[PlaybackPos][1], sets);
-    let currentData = JSON.parse(localStorage.getItem(QueueManager.Queue[PlaybackPos][1] + "-meta"));
-    if (currentData.lyrics && typeof currentData.lyrics === "string") {   
-        document.getElementById("FVLyricsContainer").innerText = currentData.lyrics;
-    } else {
-        document.getElementById("FVLyricsContainer").innerText = "No lyrics available."
-    }
+     
     retrieveBlobURL(QueueManager.Queue[PlaybackPos][0], QueueManager.Queue[PlaybackPos][1], function(s) {
         AudioPlayer.src = s;
         AudioPlayer.play();

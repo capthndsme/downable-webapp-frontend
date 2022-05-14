@@ -80,7 +80,10 @@ function serverConvert(TubeID, Title) {
         console.log(data);
         console.log(data.url);
         createDownloadNode(Title, TubeID);
-        localStorage.setItem(TubeID + "-meta", JSON.stringify({metadata:data.metadata, lyrics: data.lyrics}))
+        localStorage.setItem(
+          TubeID + "-meta",
+          JSON.stringify({ metadata: data.metadata, lyrics: data.lyrics })
+        );
         downloadFile(data.audio, data.metadata.title, TubeID);
       } else {
         setTimeout(function () {
@@ -114,7 +117,7 @@ function serverConvert(TubeID, Title) {
 }
 function getBlobArt(id, cb) {
   imgdb
-    .getAttachment(id , id )
+    .getAttachment(id, id)
     .then(function (blobOrBuffer) {
       var smb = URL.createObjectURL(blobOrBuffer);
       cb(smb);
@@ -906,22 +909,83 @@ function filterManager(ref) {
 
 let _lyricLock;
 function closeLyricsView() {
-  
   let target = document.getElementById("FVLyricsView");
   window.clearTimeout(_lyricLock);
-  _lyricLock = setTimeout(function() {
+  _lyricLock = setTimeout(function () {
     target.style.display = "none";
   }, 360);
-  
-  target.style.transform = "translateY(100%)"
+
+  target.style.transform = "translateY(100%)";
 }
 function showLyrics() {
   moreFV();
+  let currentData = JSON.parse(
+    localStorage.getItem(QueueManager.Queue[QueueManager.playbackPosition][1] + "-meta")
+  );
+  if (currentData.lyrics && typeof currentData.lyrics === "string") {
+    document.getElementById("FVLyricsContainer").innerText = currentData.lyrics;
+  } else {
+    document.getElementById("FVLyricsContainer").innerText =
+      "No lyrics available.";
+  }
   let target = document.getElementById("FVLyricsView");
   target.style.display = "block";
   window.clearTimeout(_lyricLock);
-  _lyricLock = setTimeout(function() {
-    target.style.transform = "translateY(0%)"
+  _lyricLock = setTimeout(function () {
+    target.style.transform = "translateY(0%)";
   }, 32);
+}
+function showMediaInfo() {
+  moreFV();
+  let currentData = JSON.parse(
+    localStorage.getItem(QueueManager.Queue[QueueManager.playbackPosition][1] + "-meta")
+  );
+  if (currentData.metadata && typeof currentData.metadata === "object") {
+   let rootContainer = document.getElementById("FVLyricsContainer");
+   document.getElementById("FVLyricsContainer").innerText = "";
+   let uploadDate = document.createElement("div");
+   let uploader = document.createElement("div");
+   let description = document.createElement("div");
 
+   uploadDate.className = "UploadDate";
+   uploader.className = "Uploader";
+   description.className = "Description";
+
+   uploadDate.innerText = "Uploaded at " + currentData.metadata.uploadDate;
+   uploader.innerText = currentData.metadata.ownerChannelName;
+   description.innerText = currentData.metadata.description;
+
+   rootContainer.appendChild(uploadDate);
+   rootContainer.appendChild(uploader);
+   rootContainer.appendChild(description);
+  } else {
+    document.getElementById("FVLyricsContainer").innerText =
+      "Media info missing";
+  }
+  let target = document.getElementById("FVLyricsView");
+  target.style.display = "block";
+  window.clearTimeout(_lyricLock);
+  _lyricLock = setTimeout(function () {
+    target.style.transform = "translateY(0%)";
+  }, 32);
+}
+
+function volButton(VAL) {
+  AudioPlayer.volume = VAL / 100;
+}
+
+let volPanelVisibility = false;
+function showVolumePanel(ref) {
+  console.log(ref.getBoundingClientRect());
+  let volPanel = document.getElementById("FVVolumePanel");
+  if (volPanelVisibility) {
+    volPanel.style.display = "none";
+    volPanelVisibility = false;
+  } else {
+    let refPos = ref.getBoundingClientRect();
+    volPanel.style.display = "block";
+    volPanel.style.top = refPos.top - refPos.height / 2 - 8 + "px";
+    volPanel.style.left = refPos.left - refPos.width - 8 + "px";
+    volPanelVisibility = true;
+  }
 }

@@ -146,6 +146,7 @@
 	<div id="FullView">
 		<div id="MoreFV">
 			<button class="list" onclick="showLyrics()">Lyrics</button>
+			<button class="list" onclick="showMediaInfo()">Media Info</button>
 		</div>
 		<div id="FVHeads">
 			<button onclick="window.history.back()" class="aps material-icons">close</button>
@@ -172,13 +173,17 @@
 					<div id="FullTimerTotal" style="float:right" class="FullTimerTotal">00:00</div>
 				</div>
 				
-
+			<div id="FVVolumePanel"> 
+				<input type="range" value="100" min="0" max="100" onchange="volButton(this.value)">
+			</div>
 			<div id="FVPlayButtons">
+				
 				<button id="FVShuffle" onclick="toggleShuffle(this)" class="material-icons fvi">shuffle</button>
 				<button id="FVBack" onclick="playBack()" class="material-icons fvi">skip_previous</button>
 				<button id="FullPlay" onclick="togglePause()" class="material-icons fvi">pause</button>
 				<button id="FVForw" onclick="playNext()" class="material-icons fvi">skip_next</button>
 				<button id="FVRepeat" onclick="toggleRepeat()" class="material-icons fvi">repeat</button>
+				<button id="FVRepeat" onclick="showVolumePanel(this)" class="material-icons fvi">volume_up</button>
 			</div>
 			</div>
 		</div>

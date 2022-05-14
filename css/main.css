@@ -561,10 +561,25 @@ input {
   margin-bottom: 4px;
 }
 .fvi {
-  font-size: 36px;
+  font-size: 34px;
   color: white;
   background: none;
   border: none;
+}
+#FVVolumePanel {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  width: 120px;
+  padding: 4px 6px;
+  z-index: 10;
+  display: none;
+  background: rgba(50, 50, 50, 0.7);
+  border-radius: 8px;;
+}
+#FVVolumePanel > input{
+  width: 100%
+
 }
 .DownloadTitle {
   font-size: 20px;
@@ -632,6 +647,7 @@ input {
 }
 body {
   -webkit-user-select: none;
+  user-select: none;
   -webkit-tap-highlight-color: transparent;
   -webkit-touch-callout: none;
   overscroll-behavior-y: contain;
