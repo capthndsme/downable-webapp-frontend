@@ -989,7 +989,8 @@ button {
 /*
 Mobile
 */
-@media only screen and (max-width: 820px) {
+@media only screen and (max-width: 820px), 
+    screen and (max-height: 600px) {
   .navicons {
     text-align: center;
   }

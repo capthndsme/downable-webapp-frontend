@@ -611,6 +611,22 @@ function do_Load() {
   if ("mediaSession" in navigator) {
     navigator.mediaSession.setActionHandler("previoustrack", playBack);
     navigator.mediaSession.setActionHandler("nexttrack", playNext);
+    navigator.mediaSession.setActionHandler("nexttrack", playNext);
+
+    let skipTime = 10; // Time to skip in seconds
+
+    navigator.mediaSession.setActionHandler("seekbackward", (evt) => {
+      // User clicked "Seek Backward" media notification icon.
+      AudioPlayer.currentTime = Math.max(AudioPlayer.currentTime - skipTime, 0);
+    });
+
+    navigator.mediaSession.setActionHandler("seekforward", (evt) => {
+      // User clicked "Seek Forward" media notification icon.
+      AudioPlayer.currentTime = Math.min(
+        AudioPlayer.currentTime + skipTime,
+        AudioPlayer.duration
+      );
+    });
   }
 
   // ... To remove items from a list:
@@ -926,15 +942,30 @@ function showLyrics() {
   moreFV();
   _lvMode = "LYRICS";
   _lyrics();
+  let target = document.getElementById("FVLyricsView");
+  target.style.display = "block";
+  window.clearTimeout(_lyricLock);
+  _lyricLock = setTimeout(function () {
+    target.style.transform = "translateY(0%)";
+  }, 32);
 }
 function showMediaInfo() {
   moreFV();
   _lvMode = "MEDIA_INFO";
-  _mediaInfo()
+  _mediaInfo();
+  let target = document.getElementById("FVLyricsView");
+  target.style.display = "block";
+  window.clearTimeout(_lyricLock);
+  _lyricLock = setTimeout(function () {
+    target.style.transform = "translateY(0%)";
+  }, 32);
 }
 function _lyrics() {
+  _lvMode = "LYRICS";
   let currentData = JSON.parse(
-    localStorage.getItem(QueueManager.Queue[QueueManager.playbackPosition][1] + "-meta")
+    localStorage.getItem(
+      QueueManager.Queue[QueueManager.playbackPosition][1] + "-meta"
+    )
   );
   if (currentData.lyrics && typeof currentData.lyrics === "string") {
     document.getElementById("FVLyricsContainer").innerText = currentData.lyrics;
@@ -942,45 +973,37 @@ function _lyrics() {
     document.getElementById("FVLyricsContainer").innerText =
       "No lyrics available.";
   }
-  let target = document.getElementById("FVLyricsView");
-  target.style.display = "block";
-  window.clearTimeout(_lyricLock);
-  _lyricLock = setTimeout(function () {
-    target.style.transform = "translateY(0%)";
-  }, 32);
 }
 function _mediaInfo() {
+  _lvMode = "MEDIA_INFO";
   let currentData = JSON.parse(
-    localStorage.getItem(QueueManager.Queue[QueueManager.playbackPosition][1] + "-meta")
+    localStorage.getItem(
+      QueueManager.Queue[QueueManager.playbackPosition][1] + "-meta"
+    )
   );
   if (currentData.metadata && typeof currentData.metadata === "object") {
-   let rootContainer = document.getElementById("FVLyricsContainer");
-   document.getElementById("FVLyricsContainer").innerText = "";
-   let uploadDate = document.createElement("div");
-   let uploader = document.createElement("div");
-   let description = document.createElement("div");
+    let rootContainer = document.getElementById("FVLyricsContainer");
+    document.getElementById("FVLyricsContainer").innerText = "";
+    let uploadDate = document.createElement("div");
+    let uploader = document.createElement("div");
+    let description = document.createElement("div");
 
-   uploadDate.className = "UploadDate";
-   uploader.className = "Uploader";
-   description.className = "Description";
+    uploadDate.className = "UploadDate";
+    uploader.className = "Uploader";
+    description.className = "Description";
 
-   uploadDate.innerText = "Uploaded at " + currentData.metadata.uploadDate;
-   uploader.innerText = "Uploader: " + currentData.metadata.ownerChannelName;
-   description.innerText = "Description: \n" + currentData.metadata.description;
+    uploadDate.innerText = "Uploaded at " + currentData.metadata.uploadDate;
+    uploader.innerText = "Uploader: " + currentData.metadata.ownerChannelName;
+    description.innerText =
+      "Description: \n" + currentData.metadata.description;
 
-   rootContainer.appendChild(uploadDate);
-   rootContainer.appendChild(uploader);
-   rootContainer.appendChild(description);
+    rootContainer.appendChild(uploadDate);
+    rootContainer.appendChild(uploader);
+    rootContainer.appendChild(description);
   } else {
     document.getElementById("FVLyricsContainer").innerText =
       "Media info missing";
   }
-  let target = document.getElementById("FVLyricsView");
-  target.style.display = "block";
-  window.clearTimeout(_lyricLock);
-  _lyricLock = setTimeout(function () {
-    target.style.transform = "translateY(0%)";
-  }, 32);
 }
 
 function volButton(VAL) {

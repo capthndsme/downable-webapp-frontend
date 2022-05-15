@@ -76,7 +76,7 @@ function playSongFromID(ref) {
 }
 function changeSong(e) {
     let index = e.getAttribute("data-songid");
- 
+    
     if (!(e.getAttribute("data-playlistid") == "AllSongs")) {
         switchQueue();
        
@@ -120,7 +120,8 @@ function sets(x) {
             navigator.mediaSession.metadata = new MediaMetadata({
                 artwork: [
                     { src: "noart.png", type: 'image/png' }
-                ]
+                ], 
+                title: QueueManager.Queue[QueueManager.playbackPosition][0]
             }); }
         } else {
             if (curimgblob) {
@@ -133,7 +134,8 @@ function sets(x) {
                 navigator.mediaSession.metadata = new MediaMetadata({
                     artwork: [
                         { src: x, type: 'image/png' }
-                    ]
+                    ],
+                    title: QueueManager.Queue[QueueManager.playbackPosition][0]
                 }); }
             }
     document.getElementById("Albart").src = aa.src;
