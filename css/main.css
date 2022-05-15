@@ -457,9 +457,7 @@ Desktop
   width: calc(100% - 300px);
   height: 100%;
 }
-div {
-  overscroll-behavior: none;
-}
+ 
 .navicons {
   color: white;
   text-decoration: none;
