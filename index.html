@@ -3,7 +3,7 @@
 
 <head>
 	<meta charset="utf-8">
-	<title></title>
+	<title>Downable Web App (FEv3)</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<script>
@@ -18,6 +18,8 @@
 	
 	<link rel="manifest" href="site.webmanifest">
 	<link rel="apple-touch-icon" href="icon.png">	
+	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
 	<meta name="apple-mobile-web-app-title" content="Downable Web App">
 	<!-- Place favicon.ico in the root directory -->
 	<meta name="theme-color" content="#222">
@@ -51,7 +53,7 @@
 				<a data-navigo href="playOpen" id="nowPlaying">Nothing playing.</a>
 			</div> 
 			<div id="NavInr">
-				<div class="hideMob" style="font-weight: 300;font-size:36px;margin-bottom:16px;">Downable</div>
+				 
 				<a href="home" data-elastic data-navigo id="home" class="navicons"> 
 					<i class="material-icons">home</i>
 					<div class="NavName">Home</div>
@@ -69,7 +71,7 @@
 
 	<div id="MainUI" >
 		<div id="HomeView" class="view activeView">
-			<div style="opacity:0.3;padding: 4px;">Downable v3.41 by captainhandsome</div>
+			<div style="opacity:0.3;padding: 4px;">Downable v3.60 by captainhandsome</div>
 			<div id="NoNetworkError" style="display: none;">No network access.</div>
 			<center id="MainDLUI">
 				
@@ -142,14 +144,17 @@
 		</div>
 	</div>
 	<div id="AddToPlaylistView">
-		<button onclick="window.history.back()" class="aps material-icons">close</button>
-		<div class="big">Add song to Playlist</div>
-		Currently adding: <div id="SongNameAdd"></div><br/>
-		Select playlist from below.
-		<div id="PLV_Selectors">
+		<div >
+			<button onclick="window.history.back()" class="aps material-icons">close</button>
+			<div class="big">Add song to Playlist</div>
+			Currently adding: <div id="SongNameAdd"></div><br/>
+			Select playlist from below.
+			<div id="PLV_Selectors">
+	
+			</div>
+			<div onclick="addSongToPlaylistCalc()" style="width:100%" class="pbut">Add to Playlist</div></div>
 
-		</div>
-		<div onclick="addSongToPlaylistCalc()" style="width:100%" class="pbut">Add to Playlist</div>
+		
 	</div>
 	<div id="FullView">
 		<div id="MoreFV">
@@ -168,6 +173,8 @@
 		<div id="FVControls"> 
 			<div id="FVLyricsView">
 				<button id="FVLyricsHideMobile" onclick="closeLyricsView()">Close</button>
+				<button class="hideMob" onclick="_lyrics()">Lyrics</button>
+				<button class="hideMob" onclick="_mediaInfo()">Description</button>
 				<div id="FVLyricsContainer">Lyrics show up here.</div>
 			</div>
 			<div style="padding:16px;" class="SizeControl">
@@ -182,7 +189,7 @@
 				</div>
 				
 			<div id="FVVolumePanel"> 
-				<input type="range" value="100" min="0" max="100" onchange="volButton(this.value)">
+				<input type="range" value="100" min="0" max="100" oninput="volButton(this.value)" onchange="volButton(this.value)">
 			</div>
 			<div id="FVPlayButtons">
 				
@@ -197,20 +204,23 @@
 		</div>
 	</div> 
 	<div id="SettingsView">
-		<div id="SVHeads">
-			<button onclick="window.history.back()" class="aps material-icons">close</button>
-			<div class="FVItem" style="flex: 1 0 auto">
-				Settings
+		<div>
+			<div id="SVHeads">
+				<button onclick="window.history.back()" class="aps material-icons">close</button>
+				<div class="FVItem" style="flex: 1 0 auto">
+					Settings
+				</div>
+				<button onclick="moreFV()" class="aps material-icons"></button>
 			</div>
-			<button onclick="moreFV()" class="aps material-icons"></button>
+			<br/>
+			Disable blur if you are experiencing bad performance, especially on lower end devices.<br/>
+			<input onchange="toggleBlur(this)" type="checkbox" id="disableBlur" name="blur-tgl" class="switch-input">
+			<label for="disableBlur" class="switch-label">Disable Blur Effects<span class="toggle--on"></span><span class="toggle--off"></span></label>
+			<br/>
+			<input type="checkbox" id="Theme" name="Theme-tgl" class="switch-input">
+			<label for="Theme" class="switch-label">Theme <span class="toggle--on">Light</span><span class="toggle--off">Dark</span></label><br/>
 		</div>
-		<br/>
-		Disable blur if you are experiencing bad performance, especially on lower end devices.<br/>
-		<input onchange="toggleBlur(this)" type="checkbox" id="disableBlur" name="blur-tgl" class="switch-input">
-        <label for="disableBlur" class="switch-label">Disable Blur Effects<span class="toggle--on"></span><span class="toggle--off"></span></label>
-		<br/>
-		<input type="checkbox" id="Theme" name="Theme-tgl" class="switch-input">
-        <label for="Theme" class="switch-label">Theme <span class="toggle--on">Light</span><span class="toggle--off">Dark</span></label><br/>
+		
 	</div>
 	<div id="tmps" style="display:none">
 		<a class="pbut" id="tmp_plist" href="#!library/AllSongs">All Songs</a>

@@ -57,7 +57,7 @@ function playSongArr(PlaybackPos) {
     console.log("PlayCall", PlaybackPos);
     document.getElementById("nowPlaying").innerHTML = QueueManager.Queue[PlaybackPos][0];
     //document.getElementById("CurSongName").innerHTML = QueueManager.Queue[PlaybackPos][0];
-    document.title = QueueManager.Queue[PlaybackPos][0];
+    document.title = QueueManager.Queue[PlaybackPos][0] + " - Downable Web App [FEv3]";
     document.getElementById("SongTitle").innerHTML = QueueManager.Queue[PlaybackPos][0];
     QueueManager.playbackPosition = PlaybackPos;
     getBlobArt(QueueManager.Queue[PlaybackPos][1], sets);
@@ -85,7 +85,7 @@ function changeSong(e) {
 
         } else {
             QueueManager.ActiveQueueName = "AllSongs";
-            document.getElementById("CurrentQueue").innerHTML = "All Songs"; 
+            document.getElementById("CurrentQueue").innerText = "All Songs"; 
             QueueManager.setActiveQueue(QueueManager.AllSongsEx);
             QueueManager.doShuffleCurrentQueue();
         }

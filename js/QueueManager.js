@@ -146,7 +146,7 @@ function hidePlaylists() {
 function showPlaylists() {
     let pl = document.getElementById("PlaylistViews");
     pl.style.transform = "translateX(0%)";
-    document.getElementById("currQ").innerHTML = "";
+    document.getElementById("currQ").innerText = "";
 }
 
 function showLoadList() {
@@ -154,11 +154,11 @@ function showLoadList() {
     if (location.hash == "#!library/AllSongs") {
         document.getElementById("AllSongs").style.display = "block";
         document.getElementById("Sublists").style.display = "none";
-        document.getElementById("currQ").innerHTML = "All Songs";
+        document.getElementById("currQ").innerText = "All Songs";
     } else {
         document.getElementById("AllSongs").style.display = "none";
         document.getElementById("Sublists").style.display = "block";
-        document.getElementById("currQ").innerHTML = QueueManager.playlists[curListInView].display;
+        document.getElementById("currQ").innerText = QueueManager.playlists[curListInView].display;
         showPlContents();
     }
 }
@@ -211,7 +211,7 @@ function loadPlaylistDisplay() {
 }
 function switchQueue() {
     QueueManager.ActiveQueueName = curListInView;
-    document.getElementById("CurrentQueue").innerHTML = "Playlist " + QueueManager.playlists[curListInView].display; 
+    document.getElementById("CurrentQueue").innerText = "Playlist: " + QueueManager.playlists[curListInView].display; 
     QueueManager.setActiveQueue(QueueManager.playlists[curListInView].contents);
 }
 function showPlContents() {
@@ -231,7 +231,7 @@ function addToPlayListModal() {
         clearSelects[i].classList.remove("selectorSelected");
     }
     if (window.addSongToPlaylistRef) {
-        document.getElementById("SongNameAdd").innerHTML = addSongToPlaylistRef[0];
+        document.getElementById("SongNameAdd").innerText = addSongToPlaylistRef[0];
         document.getElementById("AddToPlaylistView").style.display = "block";
         let plists = Object.keys(QueueManager.playlists);
         let selectors = document.getElementById("PLV_Selectors");

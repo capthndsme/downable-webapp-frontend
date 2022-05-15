@@ -600,6 +600,10 @@ function do_Load() {
     notDragging = true;
     AudioPlayer.currentTime = FullRange.value;
   };
+  FullRange.oninput = function () {
+    notDragging = false;
+    AudioPlayer.currentTime = FullRange.value;
+  };
   CalculateBackdrop();
   window.libraryListView = document.getElementById("AllSongs");
   window.MainUI = document.getElementById("MainUI");
@@ -908,6 +912,7 @@ function filterManager(ref) {
 }
 
 let _lyricLock;
+let _lvMode = "LYRICS"; // default in Desktop.
 function closeLyricsView() {
   let target = document.getElementById("FVLyricsView");
   window.clearTimeout(_lyricLock);
@@ -919,6 +924,15 @@ function closeLyricsView() {
 }
 function showLyrics() {
   moreFV();
+  _lvMode = "LYRICS";
+  _lyrics();
+}
+function showMediaInfo() {
+  moreFV();
+  _lvMode = "MEDIA_INFO";
+  _mediaInfo()
+}
+function _lyrics() {
   let currentData = JSON.parse(
     localStorage.getItem(QueueManager.Queue[QueueManager.playbackPosition][1] + "-meta")
   );
@@ -935,8 +949,7 @@ function showLyrics() {
     target.style.transform = "translateY(0%)";
   }, 32);
 }
-function showMediaInfo() {
-  moreFV();
+function _mediaInfo() {
   let currentData = JSON.parse(
     localStorage.getItem(QueueManager.Queue[QueueManager.playbackPosition][1] + "-meta")
   );
@@ -952,8 +965,8 @@ function showMediaInfo() {
    description.className = "Description";
 
    uploadDate.innerText = "Uploaded at " + currentData.metadata.uploadDate;
-   uploader.innerText = currentData.metadata.ownerChannelName;
-   description.innerText = currentData.metadata.description;
+   uploader.innerText = "Uploader: " + currentData.metadata.ownerChannelName;
+   description.innerText = "Description: \n" + currentData.metadata.description;
 
    rootContainer.appendChild(uploadDate);
    rootContainer.appendChild(uploader);
