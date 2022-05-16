@@ -389,7 +389,18 @@ function clearSearchUI() {
     SearchUIResults.removeChild(SearchUIResults.lastChild);
   }
 }
-
+document.onkeydown = function(evt) {
+  evt = evt || window.event;
+  var isEscape = false;
+  if ("key" in evt) {
+      isEscape = (evt.key === "Escape" || evt.key === "Esc");
+  } else {
+      isEscape = (evt.keyCode === 27);
+  }
+  if (isEscape && fv) {
+      window.history.back();
+  }
+};
 function clearSublist() {
   while (Sublist.firstChild) {
     Sublist.removeChild(Sublist.lastChild);
@@ -578,6 +589,37 @@ function requestStorage() {
 }
 
 function do_Load() {
+  (function(){
+    
+    function onChange(event) {
+        var reader = new FileReader();
+        reader.onload = onReaderLoad;
+        reader.readAsText(event.target.files[0]);
+        Toastify({
+          text: "Restoring backup. Please reload after restore completes.",
+          duration: 2500,
+          close: true,
+          gravity: "top", // `top` or `bottom`
+          positionLeft: false, // `true` or `false`
+          backgroundColor: "linear-gradient(to right, black, green)",
+        }).showToast();
+    }
+
+    function onReaderLoad(event){
+      
+        console.log(event.target.result);
+        let obj = JSON.parse(event.target.result);
+        for (let i = 0; i < obj.length; i++) {
+          serverConvert(obj[i][1], obj[i][0]);
+        }
+        
+    }
+    
+ 
+ 
+    document.getElementById('restoreuploader').addEventListener('change', onChange);
+
+}());
   window.Sublist = document.getElementById("Sublists");
   document.getElementById("MoreFV").style.display = "none";
   window.SearchUI = document.getElementById("SearchUI");
@@ -680,12 +722,17 @@ function do_Load() {
       },
     })
     .resolve();
+  
+  document.getElementById("LOADER").style.opacity = "0";
+  setTimeout(function() {document.getElementById("LOADER").remove()}, 350);
   isOnline(Offlined, Onlined);
 }
 
 function condUp() {
   if (location.hash.startsWith("#!library/")) {
+    
     window.history.back();
+    QueueManager.Queue[QueueManager.playbackPosition][0]
   } else {
   }
 }
@@ -742,6 +789,37 @@ function RepeatStateResolver() {
     Preferences.Repeat = true;
     Preferences.RepeatOnce = true;
   }
+}
+function download(filename, text) {
+  var element = document.createElement('a');
+  element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+  element.setAttribute('download', filename);
+
+  element.style.display = 'none';
+  document.body.appendChild(element);
+
+  element.click();
+
+  document.body.removeChild(element);
+}
+function formatDate(date) {
+  var d = new Date(date),
+      month = '' + (d.getMonth() + 1),
+      day = '' + d.getDate(),
+      year = d.getFullYear();
+
+  if (month.length < 2) 
+      month = '0' + month;
+  if (day.length < 2) 
+      day = '0' + day;
+
+  return [year, month, day].join('-');
+}
+
+function backupGenerate() {
+  
+  download(formatDate(new Date()) + "-Downable-Backup.json",
+  JSON.stringify(QueueManager.AllSongsEx));
 }
 function RepeatRender() {
   if (typeof Preferences.Repeat == "boolean") {
@@ -974,6 +1052,7 @@ function _lyrics() {
       "No lyrics available.";
   }
 }
+ 
 function _mediaInfo() {
   _lvMode = "MEDIA_INFO";
   let currentData = JSON.parse(
