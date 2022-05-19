@@ -26,7 +26,7 @@ const cacheUrls = [
   "/css/NoBlur.css",
   "/site.webmanifest"
 ];
-const VERSION = "v3.62b"
+const VERSION = "v3.62c"
 self.addEventListener("install", function (e) {
   console.log("ServiceWorker install event");
   e.waitUntil(

@@ -389,16 +389,16 @@ function clearSearchUI() {
     SearchUIResults.removeChild(SearchUIResults.lastChild);
   }
 }
-document.onkeydown = function(evt) {
+document.onkeydown = function (evt) {
   evt = evt || window.event;
   var isEscape = false;
   if ("key" in evt) {
-      isEscape = (evt.key === "Escape" || evt.key === "Esc");
+    isEscape = evt.key === "Escape" || evt.key === "Esc";
   } else {
-      isEscape = (evt.keyCode === 27);
+    isEscape = evt.keyCode === 27;
   }
   if (isEscape && fv) {
-      window.history.back();
+    window.history.back();
   }
 };
 function clearSublist() {
@@ -589,37 +589,33 @@ function requestStorage() {
 }
 
 function do_Load() {
-  (function(){
-    
+  (function () {
     function onChange(event) {
-        var reader = new FileReader();
-        reader.onload = onReaderLoad;
-        reader.readAsText(event.target.files[0]);
-        Toastify({
-          text: "Restoring backup. Please reload after restore completes.",
-          duration: 2500,
-          close: true,
-          gravity: "top", // `top` or `bottom`
-          positionLeft: false, // `true` or `false`
-          backgroundColor: "linear-gradient(to right, black, green)",
-        }).showToast();
+      var reader = new FileReader();
+      reader.onload = onReaderLoad;
+      reader.readAsText(event.target.files[0]);
+      Toastify({
+        text: "Restoring backup. Please reload after restore completes.",
+        duration: 2500,
+        close: true,
+        gravity: "top", // `top` or `bottom`
+        positionLeft: false, // `true` or `false`
+        backgroundColor: "linear-gradient(to right, black, green)",
+      }).showToast();
     }
 
-    function onReaderLoad(event){
-      
-        console.log(event.target.result);
-        let obj = JSON.parse(event.target.result);
-        for (let i = 0; i < obj.length; i++) {
-          serverConvert(obj[i][1], obj[i][0]);
-        }
-        
+    function onReaderLoad(event) {
+      console.log(event.target.result);
+      let obj = JSON.parse(event.target.result);
+      for (let i = 0; i < obj.length; i++) {
+        serverConvert(obj[i][1], obj[i][0]);
+      }
     }
-    
- 
- 
-    document.getElementById('restoreuploader').addEventListener('change', onChange);
 
-}());
+    document
+      .getElementById("restoreuploader")
+      .addEventListener("change", onChange);
+  })();
   window.Sublist = document.getElementById("Sublists");
   document.getElementById("MoreFV").style.display = "none";
   window.SearchUI = document.getElementById("SearchUI");
@@ -680,9 +676,9 @@ function do_Load() {
   loadPreferences();
   QueueManager.utils.deserializePlaylists();
   loadPlaylistDisplay();
-  var root = null;
-  var useHash = true; // Defaults to: false
-  var hash = "#!"; // Defaults to: '#'
+  let root = null;
+  let useHash = true; // Defaults to: false
+  let hash = "#!"; // Defaults to: '#'
   window.router = new Navigo(root, useHash, hash);
   router
     .on({
@@ -722,17 +718,33 @@ function do_Load() {
       },
     })
     .resolve();
-  
+
   document.getElementById("LOADER").style.opacity = "0";
-  setTimeout(function() {document.getElementById("LOADER").remove()}, 350);
+  setTimeout(function () {
+    document.getElementById("LOADER").remove();
+  }, 350);
   isOnline(Offlined, Onlined);
+  navigator.serviceWorker.getRegistration().then(function (registration) {
+    if (registration) {
+      // if there is a SW active
+      registration.addEventListener("updatefound", () => {
+        Toastify({
+          text: "App update detected. Reload page to update",
+          duration: 4500,
+          close: true,
+          gravity: "top", // `top` or `bottom`
+          positionLeft: false, // `true` or `false`
+          backgroundColor: "linear-gradient(to right, black, green)",
+        }).showToast();
+      });
+    }
+  });
 }
 
 function condUp() {
   if (location.hash.startsWith("#!library/")) {
-    
     window.history.back();
-    QueueManager.Queue[QueueManager.playbackPosition][0]
+    QueueManager.Queue[QueueManager.playbackPosition][0];
   } else {
   }
 }
@@ -791,11 +803,14 @@ function RepeatStateResolver() {
   }
 }
 function download(filename, text) {
-  var element = document.createElement('a');
-  element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
-  element.setAttribute('download', filename);
+  var element = document.createElement("a");
+  element.setAttribute(
+    "href",
+    "data:text/plain;charset=utf-8," + encodeURIComponent(text)
+  );
+  element.setAttribute("download", filename);
 
-  element.style.display = 'none';
+  element.style.display = "none";
   document.body.appendChild(element);
 
   element.click();
@@ -804,22 +819,21 @@ function download(filename, text) {
 }
 function formatDate(date) {
   var d = new Date(date),
-      month = '' + (d.getMonth() + 1),
-      day = '' + d.getDate(),
-      year = d.getFullYear();
+    month = "" + (d.getMonth() + 1),
+    day = "" + d.getDate(),
+    year = d.getFullYear();
 
-  if (month.length < 2) 
-      month = '0' + month;
-  if (day.length < 2) 
-      day = '0' + day;
+  if (month.length < 2) month = "0" + month;
+  if (day.length < 2) day = "0" + day;
 
-  return [year, month, day].join('-');
+  return [year, month, day].join("-");
 }
 
 function backupGenerate() {
-  
-  download(formatDate(new Date()) + "-Downable-Backup.json",
-  JSON.stringify(QueueManager.AllSongsEx));
+  download(
+    formatDate(new Date()) + "-Downable-Backup.json",
+    JSON.stringify(QueueManager.AllSongsEx)
+  );
 }
 function RepeatRender() {
   if (typeof Preferences.Repeat == "boolean") {
@@ -1052,7 +1066,7 @@ function _lyrics() {
       "No lyrics available.";
   }
 }
- 
+
 function _mediaInfo() {
   _lvMode = "MEDIA_INFO";
   let currentData = JSON.parse(
