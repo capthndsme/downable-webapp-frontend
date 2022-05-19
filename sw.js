@@ -18,7 +18,6 @@ const cacheUrls = [
   "/js/swal.min.js",
   "/js/AudioPlayer.js",
   "/js/main.js",
-  "/js/vendor/jquery-3.4.1.min.js",
   "/css/MaterialIcons-Regular.woff2",
   "/sw.js",
   "/index.html",
@@ -27,7 +26,7 @@ const cacheUrls = [
   "/css/NoBlur.css",
   "/site.webmanifest"
 ];
-const VERSION = "v3.62"
+const VERSION = "v3.62b"
 self.addEventListener("install", function (e) {
   console.log("ServiceWorker install event");
   e.waitUntil(
