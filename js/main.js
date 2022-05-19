@@ -120,9 +120,11 @@ function getBlobArt(id, cb) {
     .getAttachment(id, id)
     .then(function (blobOrBuffer) {
       var smb = URL.createObjectURL(blobOrBuffer);
+      
       cb(smb);
     })
     .catch(function (err) {
+      console.warn(err);
       cb("Error");
     });
 }
