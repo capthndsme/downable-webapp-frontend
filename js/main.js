@@ -589,6 +589,48 @@ function requestStorage() {
 }
 
 function do_Load() {
+  let root = null;
+  let useHash = true; // Defaults to: false
+  let hash = "#!"; // Defaults to: '#'
+  window.router = new Navigo(root, useHash, hash);
+  router
+    .on({
+      downloads: function () {
+        setContent("dls");
+        HideSettings();
+      },
+      library: function () {
+        setContent("lib");
+        document.getElementById("libBtn").innerText = "Library";
+        document.getElementById("libBtn").style.color = "unset";
+        HideSettings();
+        showPlaylists();
+        document.getElementById("AllSongs").style.display = "none";
+        document.getElementById("Sublists").style.display = "none";
+      },
+      playOpen: function () {
+        showPlayEx();
+        HideSettings();
+      },
+      settings: function () {
+        document.getElementById("SettingsView").style.display = "block";
+      },
+      "library/*": function () {
+        setContent("lib");
+        HideSettings();
+        hidePlaylists();
+        showLoadList();
+        document.getElementById("libBtn").innerText = "< Library";
+        document.getElementById("libBtn").style.color = "#7FC9FF";
+      },
+      createPlist: createPlaylistDialog,
+      addtoplaylist: addToPlayListModal,
+      "*": function () {
+        setContent("home");
+        HideSettings();
+      },
+    })
+    .resolve();
   (function () {
     function onChange(event) {
       var reader = new FileReader();
@@ -676,48 +718,7 @@ function do_Load() {
   loadPreferences();
   QueueManager.utils.deserializePlaylists();
   loadPlaylistDisplay();
-  let root = null;
-  let useHash = true; // Defaults to: false
-  let hash = "#!"; // Defaults to: '#'
-  window.router = new Navigo(root, useHash, hash);
-  router
-    .on({
-      downloads: function () {
-        setContent("dls");
-        HideSettings();
-      },
-      library: function () {
-        setContent("lib");
-        document.getElementById("libBtn").innerText = "Library";
-        document.getElementById("libBtn").style.color = "unset";
-        HideSettings();
-        showPlaylists();
-        document.getElementById("AllSongs").style.display = "none";
-        document.getElementById("Sublists").style.display = "none";
-      },
-      playOpen: function () {
-        showPlayEx();
-        HideSettings();
-      },
-      settings: function () {
-        document.getElementById("SettingsView").style.display = "block";
-      },
-      "library/*": function () {
-        setContent("lib");
-        HideSettings();
-        hidePlaylists();
-        showLoadList();
-        document.getElementById("libBtn").innerText = "< Library";
-        document.getElementById("libBtn").style.color = "#7FC9FF";
-      },
-      createPlist: createPlaylistDialog,
-      addtoplaylist: addToPlayListModal,
-      "*": function () {
-        setContent("home");
-        HideSettings();
-      },
-    })
-    .resolve();
+  
 
   document.getElementById("LOADER").style.opacity = "0";
   setTimeout(function () {
