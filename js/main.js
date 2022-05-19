@@ -120,7 +120,7 @@ function getBlobArt(id, cb) {
     .getAttachment(id, id)
     .then(function (blobOrBuffer) {
       var smb = URL.createObjectURL(blobOrBuffer);
-      
+
       cb(smb);
     })
     .catch(function (err) {
@@ -594,6 +594,68 @@ function do_Load() {
   let root = null;
   let useHash = true; // Defaults to: false
   let hash = "#!"; // Defaults to: '#'
+
+  window.Sublist = document.getElementById("Sublists");
+  document.getElementById("MoreFV").style.display = "none";
+  window.SearchUI = document.getElementById("SearchUI");
+  window.SearchUIResults = document.getElementById("SearchContent");
+  window.FullRangeMeter = document.getElementById("FullRangeMeter");
+  window.FullRange = document.getElementById("FullRange");
+  window.FullTime = document.getElementById("FullTimer");
+  window.FullTimeT = document.getElementById("FullTimerTotal");
+  FullRange.ontouchstart = function () {
+    notDragging = false;
+  };
+  FullRange.ontouchend = function () {
+    notDragging = true;
+    AudioPlayer.currentTime = FullRange.value;
+  };
+  FullRange.onmousedown = function () {
+    notDragging = false;
+  };
+  FullRange.onmouseup = function () {
+    notDragging = true;
+    AudioPlayer.currentTime = FullRange.value;
+  };
+  FullRange.oninput = function () {
+    notDragging = false;
+    AudioPlayer.currentTime = FullRange.value;
+  };
+  CalculateBackdrop();
+  window.libraryListView = document.getElementById("AllSongs");
+  window.MainUI = document.getElementById("MainUI");
+  window.FullView = document.getElementById("FullView");
+  if ("mediaSession" in navigator) {
+    navigator.mediaSession.setActionHandler("previoustrack", playBack);
+    navigator.mediaSession.setActionHandler("nexttrack", playNext);
+    navigator.mediaSession.setActionHandler("nexttrack", playNext);
+
+    let skipTime = 10; // Time to skip in seconds
+
+    navigator.mediaSession.setActionHandler("seekbackward", (evt) => {
+      // User clicked "Seek Backward" media notification icon.
+      AudioPlayer.currentTime = Math.max(AudioPlayer.currentTime - skipTime, 0);
+    });
+
+    navigator.mediaSession.setActionHandler("seekforward", (evt) => {
+      // User clicked "Seek Forward" media notification icon.
+      AudioPlayer.currentTime = Math.min(
+        AudioPlayer.currentTime + skipTime,
+        AudioPlayer.duration
+      );
+    });
+  }
+
+  // ... To remove items from a list:
+  //var listItems = listView.find('.my-items');
+  //for(var index = 0, length = listItems.length; index < length; index++) {
+  // listItems[index].remove();
+  //}
+  listAllFiles();
+  loadPreferences();
+  QueueManager.utils.deserializePlaylists();
+  loadPlaylistDisplay();
+
   window.router = new Navigo(root, useHash, hash);
   router
     .on({
@@ -660,68 +722,6 @@ function do_Load() {
       .getElementById("restoreuploader")
       .addEventListener("change", onChange);
   })();
-  window.Sublist = document.getElementById("Sublists");
-  document.getElementById("MoreFV").style.display = "none";
-  window.SearchUI = document.getElementById("SearchUI");
-  window.SearchUIResults = document.getElementById("SearchContent");
-  window.FullRangeMeter = document.getElementById("FullRangeMeter");
-  window.FullRange = document.getElementById("FullRange");
-  window.FullTime = document.getElementById("FullTimer");
-  window.FullTimeT = document.getElementById("FullTimerTotal");
-  FullRange.ontouchstart = function () {
-    notDragging = false;
-  };
-  FullRange.ontouchend = function () {
-    notDragging = true;
-    AudioPlayer.currentTime = FullRange.value;
-  };
-  FullRange.onmousedown = function () {
-    notDragging = false;
-  };
-  FullRange.onmouseup = function () {
-    notDragging = true;
-    AudioPlayer.currentTime = FullRange.value;
-  };
-  FullRange.oninput = function () {
-    notDragging = false;
-    AudioPlayer.currentTime = FullRange.value;
-  };
-  CalculateBackdrop();
-  window.libraryListView = document.getElementById("AllSongs");
-  window.MainUI = document.getElementById("MainUI");
-  window.FullView = document.getElementById("FullView");
-  if ("mediaSession" in navigator) {
-    navigator.mediaSession.setActionHandler("previoustrack", playBack);
-    navigator.mediaSession.setActionHandler("nexttrack", playNext);
-    navigator.mediaSession.setActionHandler("nexttrack", playNext);
-
-    let skipTime = 10; // Time to skip in seconds
-
-    navigator.mediaSession.setActionHandler("seekbackward", (evt) => {
-      // User clicked "Seek Backward" media notification icon.
-      AudioPlayer.currentTime = Math.max(AudioPlayer.currentTime - skipTime, 0);
-    });
-
-    navigator.mediaSession.setActionHandler("seekforward", (evt) => {
-      // User clicked "Seek Forward" media notification icon.
-      AudioPlayer.currentTime = Math.min(
-        AudioPlayer.currentTime + skipTime,
-        AudioPlayer.duration
-      );
-    });
-  }
-
-  // ... To remove items from a list:
-  //var listItems = listView.find('.my-items');
-  //for(var index = 0, length = listItems.length; index < length; index++) {
-  // listItems[index].remove();
-  //}
-  listAllFiles();
-  loadPreferences();
-  QueueManager.utils.deserializePlaylists();
-  loadPlaylistDisplay();
-  
-
   document.getElementById("LOADER").style.opacity = "0";
   setTimeout(function () {
     document.getElementById("LOADER").remove();
